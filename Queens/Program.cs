@@ -16,30 +16,67 @@ namespace Queens
         public static ConsoleColor SecondColor = ConsoleColor.Black;
         public static ConsoleColor FirstColor = ConsoleColor.White;
         public static int n = 8;//int.Parse(Console.ReadLine()) + 1;
-        public static string[] QueensStatus = new string[n * n];
-        public static string[] QueensPlaces = new string[n * n];
+        public static string[] QueensStatus = new string[10 * 10];
+        public static string[] QueensPlaces = new string[10 * 10];
 
         public static void PossibleFields()
         {
-            int temp = 0;
+            // int temp = 0;
             for (int row = 1; row <= n; row++)
             {
                 for (int column = 1; column <= n; column++)
                 {
-                    QueensStatus[temp] = $"{row}{column}";
-                    temp++;
+                    QueensStatus[int.Parse($"{row}{column}")] = $"{row},{column}";
+                    // temp++;
                 }
             }
+
         }
 
         public static void PlaceQueens()
         {
-            QueensPlaces[0]=QueensStatus[0];
+            QueensPlaces[0] = QueensStatus[11];
+            int temp = 0;
+            int temp2 = 0;
+            for (int row = 1; row <= n; row++)
+            {
+                for (int column = 1; column <= n; column++)
+                {
+
+                    if (QueensStatus[int.Parse(QueensPlaces[0].Remove(QueensPlaces[0].IndexOf(','), 1))] != null)
+                    {
+                        temp = int.Parse(QueensStatus[int.Parse($"{row}{column}")].Remove(QueensStatus[int.Parse($"{row}{column}")].IndexOf(','), 1));
+                        temp2 = int.Parse(QueensPlaces[0].Remove(QueensPlaces[0].IndexOf(','), 1));
+                    }
+                    QueensStatus[temp] = null;
+                    if (temp == temp2 + 11)
+                    {
+                        QueensStatus[int.Parse($"{row}{column}")] = null;
+                    }
+                    if (temp == temp2 - 11)
+                    {
+                        QueensStatus[int.Parse($"{row}{column}")] = null;
+                    }
+                    if (temp == temp2 - 9)
+                    {
+                        QueensStatus[int.Parse($"{row}{column}")] = null;
+                    }
+                    if (temp == temp2 + 9)
+                    {
+                        QueensStatus[int.Parse($"{row}{column}")] = null;
+                    }
+                    if (temp == temp2)
+                    {
+                        QueensStatus[int.Parse($"{row}{column}")] = null;
+                    }
+                }
+            }
         }
         public static void Write()
         {
             PossibleFields();
             Console.Write(Queen);
+            PlaceQueens();
         }
         public static void test(ConsoleColor color1, ConsoleColor color2)
         {
